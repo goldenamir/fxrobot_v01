@@ -3,22 +3,33 @@ import datetime
 import pytz
 import pandas as pd 
 import MetaTrader5 as mt5 
-import numpy as np 
+import numpy as np
 
 # adding timeFrames
-frame_M15 = mt5.TIMEFRAME_M15 # 15-minute time 
-frameframe_M30 = mt5.TIMEFRAME_M30 # 30-minute time frame 
-frame_H1 = mt5.TIMEFRAME_H1 # Hourly time frame 
-frame_H4 = mt5.TIMEFRAME_H4 # 4-hour time frame 
-frame_D1 = mt5.TIMEFRAME_D1 # Daily time frame 
-frame_W1 = mt5.TIMEFRAME_W1 # Weekly time frame 
-frame_M1 = mt5.TIMEFRAME_MN1 # Monthly time frame 
+time_frame = {
+    'frame_M15' : mt5.TIMEFRAME_M15,
+    'frameframe_M30' : mt5.TIMEFRAME_M30,
+    'frame_H1' : mt5.TIMEFRAME_H1,
+    'frame_H4' : mt5.TIMEFRAME_H4,
+    'frame_D1' : mt5.TIMEFRAME_D1,
+    'frame_W1' : mt5.TIMEFRAME_W1,
+    'frame_M1' : mt5.TIMEFRAME_MN1
+}
 
 # the values for now
 now = datetime.datetime.now()
 
 # list of assets
-assets = ['EURUSD', 'USDCHF', 'GBPUSD', 'USDCAD', 'BTCUSD','ETHUSD', 'XAUUSD', 'XAGUSD', 'SP500m', 'UK100','XAUUSD']
+assets = {
+    'eurodollar':'EURUSD',
+    'dollarfrank':'USDCHF',
+    'pounddollar':'GBPUSD',
+    'dollarcanda':'USDCAD',
+    'bitcoin':'BTCUSD',
+    'ethrioum':'ETHUSD',
+    'gold':'XAUUSD', 
+    'silver':'XAGUSD', 
+    }
 
 
 # timezone list
@@ -26,7 +37,7 @@ timezone = ['America/Newyork', 'Europe/London', 'Europe/Paris', 'Asia/Tokyo', 'A
 
 # function for getting qoutes
 
-def get_quotes(time_frame, year = 2023, month = 8, day = 18, asset = 'XAUUSD'):
+def get_quotes(time_frame = time_frame['frame_H4'], year = 2023, month = 8, day = 18, asset = assets['gold']):
     if not mt5.initialize():
         print("initialize() failed, error code =", mt5.last_error())
 
@@ -40,3 +51,4 @@ def get_quotes(time_frame, year = 2023, month = 8, day = 18, asset = 'XAUUSD'):
     return rates_frame
 
 
+print(get_quotes(time_frame=frame_H4,year=2023, month=8, day=25))
