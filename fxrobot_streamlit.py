@@ -1,3 +1,4 @@
+
 import streamlit as st
 import datetime
 import pytz
@@ -18,6 +19,18 @@ time_frame = {
     'frame_M1': mt5.TIMEFRAME_MN1
 }
 
+# Define assets
+assets = {
+    'eurodollar': 'EURUSD',
+    'dollarfrank': 'USDCHF',
+    'pounddollar': 'GBPUSD',
+    'dollarcanda': 'USDCAD',
+    'bitcoin': 'BTCUSD',
+    'ethrioum': 'ETHUSD',
+    'gold': 'XAUUSD', 
+    'silver': 'XAGUSD'
+}
+
 # ... (rest of the code remains the same) ...
 
 # Function for getting quotes
@@ -32,6 +45,8 @@ def get_quotes(time_frame, year, month, day, asset):
     rates = mt5.copy_rates_range(asset, time_frame, time_from, time_to)
     rates_frame = pd.DataFrame(rates)
     return rates_frame
+
+now = datetime.datetime.now()
 
 selected_time_frame = st.selectbox("Select Time Frame", list(time_frame.keys()))
 selected_asset = st.selectbox("Select Asset", list(assets.keys()))
